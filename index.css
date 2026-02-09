@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+.drawing-card {
+  top: var(--card-top);
+  left: var(--card-left);
+  transform: rotate(var(--card-rotation));
+}
+
+.delay-0 { animation-delay: 0ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-300 { animation-delay: 300ms; }

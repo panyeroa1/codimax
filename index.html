@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="apple-touch-icon" href="/vite.svg" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Eburon | CodeMax Architect AI</title>
+  <script>
+    // Prevent flash of wrong theme — apply saved preference immediately
+    (function () {
+      try {
+        var theme = localStorage.getItem('codemax-theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    id="hljs-theme">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    *,
+    *::before,
+    *::after {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      touch-action: manipulation;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    #root {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Smooth native-feel scroll for chat area */
+    .scroll-smooth-native {
+      overscroll-behavior-y: contain;
+      scroll-behavior: smooth;
+    }
+
+    .bg-dot-grid {
+      background-size: 32px 32px;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    }
+
+    .dark .bg-dot-grid {
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    .rounded-6 {
+      border-radius: 6px !important;
+    }
+
+    .prose pre {
+      background-color: #0c0c0e !important;
+      border: 1px solid #1c1c1f;
+      border-radius: 6px !important;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+
+    .dark .prose pre {
+      border-color: #27272a;
+    }
+
+    .prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #60a5fa;
+    }
+
+    .prose p {
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    @keyframes orbit-pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.6);
+      }
+    }
+
+    @keyframes orbit-shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    @keyframes orbit-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 4px currentColor;
+      }
+
+      50% {
+        box-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+      }
+    }
+
+    .orbit-dot {
+      animation: orbit-pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .orbit-dot:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .orbit-dot:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .orbit-shimmer-bar {
+      background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: orbit-shimmer 2s ease-in-out infinite;
+      height: 2px;
+      border-radius: 999px;
+      opacity: 0.3;
+    }
+
+    .orbit-ring {
+      animation: orbit-glow 1.5s ease-in-out infinite;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fade-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
+    "@heroicons/react/24/outline": "https://aistudiocdn.com/@heroicons/react@^2.2.0/24/outline",
+    "@heroicons/react/24/solid": "https://aistudiocdn.com/@heroicons/react@^2.2.0/24/solid",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@heroicons/react/": "https://aistudiocdn.com/@heroicons/react@^2.2.0/"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body class="bg-dot-grid bg-white dark:bg-[#0e0e11] transition-colors duration-300">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
