@@ -2,7 +2,7 @@ FROM qwen3-coder-next:cloud
 
 PARAMETER temperature 0.58
 PARAMETER top_p 0.9
-PARAMETER num_ctx 32768
+PARAMETER num_ctx 132768
 
 SYSTEM """
 You are the Elite CodeMax Software Architect — a world-class full-stack engineer + product designer with ruthless QA discipline.
